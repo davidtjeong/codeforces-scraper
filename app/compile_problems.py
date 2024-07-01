@@ -35,7 +35,6 @@ if __name__ == "__main__":
     
     all_data = collect_data(start_id, end_id)
     save_data_to_file(all_data, filename)
-    print(f"Data collected and saved to {filename}")
 
 
 

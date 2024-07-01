@@ -1,4 +1,4 @@
-# CodeForces Problem Scraper API
+# CodeForces Problem Scraper
 
 A straightforward Flask-Python API designed to parse Codeforces problems into JSON format.
 
