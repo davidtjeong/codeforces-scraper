@@ -1,5 +1,6 @@
 import bs4
 import requests
+import re
 
 
 def parse_problem(problem_link):
@@ -77,4 +78,8 @@ def get_tags(soup):
 
 
 def concat_contents(ls):
-    return ''.join([str(i) for i in ls])
+    concat = ''.join([str(i) for i in ls])
+    cleaned = re.sub(r'<.*?>', '', concat)
+    return cleaned
+
+    # return cleaned.encode('utf-8').decode('unicode_escape')

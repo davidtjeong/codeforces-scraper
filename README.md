@@ -58,7 +58,13 @@ After cloning the repository, you have two options:
     `pip3 install -r requirements.txt`
   - Start the server.  
     `FLASK_APP=main.py flask run`
+
+## Scrape and Compile Multiple Problems
+- Simply navigate to `/app` and run the script with `python compile_problems.py`
+  - This will compile all json responses within the provided range of problem ID's into one json file with the shown formats
     
+
+
 ## JSON Schema
 
 ```json
