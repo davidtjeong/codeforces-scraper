@@ -76,10 +76,15 @@ def get_tags(soup):
     tags = [tag.get_text(strip=True) for tag in tag_boxes]
     return tags
 
+def process_string(input_string):
 
-def concat_contents(ls):
-    concat = ''.join([str(i) for i in ls])
-    cleaned = re.sub(r'<.*?>', '', concat)
+    cleaned = re.sub(r'<.*?>', '', input_string)
+    cleaned = cleaned.encode('ascii', 'ignore').decode('ascii')
+    cleaned = cleaned.replace('$$$', '')
     return cleaned
 
-    # return cleaned.encode('utf-8').decode('unicode_escape')
+
+def concat_contents(ls):\
+
+    concat = ''.join([str(i) for i in ls])
+    return process_string(concat)
