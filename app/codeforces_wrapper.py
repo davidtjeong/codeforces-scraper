@@ -1,10 +1,12 @@
 import bs4
-import requests
+from requests_html import HTMLSession
 import re
 
 
+
 def parse_problem(problem_link):
-    markup = requests.get(problem_link).text
+    session = HTMLSession()
+    markup = session.get(problem_link).text
     soup = bs4.BeautifulSoup(markup, "html.parser")
     problem = {
         "name": soup.find('div', 'title').string,
