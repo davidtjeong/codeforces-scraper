@@ -1,5 +1,6 @@
 import bs4
 from requests_html import HTMLSession
+from playwright.sync_api import sync_playwright, Playwright
 import re
 
 def parse_problem(problem_link):
@@ -18,46 +19,6 @@ def parse_problem(problem_link):
         "tags": get_tags(soup),
     }
     return problem
-
-
-def scrape_editorial(editorial_link):
-    if not editorial_link:
-        print("ERROR: NO EDITORIAL LINK")
-        return
-    session = HTMLSession()
-    markup = session.get(editorial_link).text
-
-    soup = bs4.BeautifulSoup(markup, "html.parser")
-    print(editorial_link)
-    # print(markup.html.html)
-
-    # Query all elements with the class 'problem-statement'
-    problem_statements = soup.find_all(class_="content")
-    print(len(problem_statements))
-    print(problem_statements)
-
-    parsed_statements = []
-    # Iterate through the elements and process each one
-    for index, problem_statement in enumerate(problem_statements):
-        # Clone the element to avoid modifying the original
-        clone = problem_statement.copy()
-
-        # Convert MathJax elements to LaTeX
-        mathjax_elements = clone.find_all(class_='MathJax')
-        for math_element in mathjax_elements:
-            latex = convert_mathjax_to_latex(math_element)
-            math_element.replace_with(latex)
-
-        # Get the cleaned inner text
-        text = clone.get_text(strip=True)
-        
-        # Add to the result array
-        parsed_statements.append({
-            'index': index + 1,
-            'text': text
-        })
-    
-    return parsed_statements
 
 
 
@@ -82,19 +43,12 @@ def get_editorial_link(problem_link):
         return
     
 
-
-
-
-
-
-
 def split_limit(soup):
     l = soup.split()
     return {
         "value": int(l[0]),
         "unit": l[1]
     }
-
 
 def group_tests(lst):
     """returns a list of list({input, output})"""

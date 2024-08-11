@@ -56,6 +56,7 @@ After cloning the repository, you have two options:
   - Navigate to the `/app` directory.
   - Install packages in `requirements.txt` using pip3.  
     `pip3 install -r requirements.txt`
+  - Run `playwright install` to install the required browsers for Playwright, which is used for scraping dynamic web pages
   - Start the server.  
     `FLASK_APP=main.py flask run`
 
