@@ -2,8 +2,6 @@ import bs4
 from requests_html import HTMLSession
 import re
 
-
-
 def parse_problem(problem_link):
     session = HTMLSession()
     markup = session.get(problem_link).text
@@ -20,6 +18,74 @@ def parse_problem(problem_link):
         "tags": get_tags(soup),
     }
     return problem
+
+
+def scrape_editorial(editorial_link):
+    if not editorial_link:
+        print("ERROR: NO EDITORIAL LINK")
+        return
+    session = HTMLSession()
+    markup = session.get(editorial_link).text
+
+    soup = bs4.BeautifulSoup(markup, "html.parser")
+    print(editorial_link)
+    # print(markup.html.html)
+
+    # Query all elements with the class 'problem-statement'
+    problem_statements = soup.find_all(class_="content")
+    print(len(problem_statements))
+    print(problem_statements)
+
+    parsed_statements = []
+    # Iterate through the elements and process each one
+    for index, problem_statement in enumerate(problem_statements):
+        # Clone the element to avoid modifying the original
+        clone = problem_statement.copy()
+
+        # Convert MathJax elements to LaTeX
+        mathjax_elements = clone.find_all(class_='MathJax')
+        for math_element in mathjax_elements:
+            latex = convert_mathjax_to_latex(math_element)
+            math_element.replace_with(latex)
+
+        # Get the cleaned inner text
+        text = clone.get_text(strip=True)
+        
+        # Add to the result array
+        parsed_statements.append({
+            'index': index + 1,
+            'text': text
+        })
+    
+    return parsed_statements
+
+
+
+def get_editorial_link(problem_link):
+    print(problem_link)
+    session = HTMLSession()
+    markup = session.get(problem_link).text
+    soup = bs4.BeautifulSoup(markup, "html.parser")
+
+    links = soup.find_all('a')
+    tutorial_link = None
+    for link in links:
+        if 'Tutorial' in link.get_text():
+            tutorial_link = link.get('href')
+            if "codeforces" not in tutorial_link:
+                tutorial_link = "https://codeforces.com" + tutorial_link
+            break
+    
+    if tutorial_link:
+        return tutorial_link
+    else:
+        return
+    
+
+
+
+
+
 
 
 def split_limit(soup):
@@ -84,6 +150,22 @@ def process_string(input_string):
     cleaned = cleaned.encode('ascii', 'ignore').decode('ascii')
     cleaned = cleaned.replace('$$$', '')
     return cleaned
+
+def convert_mathjax_to_latex(html_content):
+    latex = re.sub(
+        r'<math.*?>.*?<mi>(.*?)</mi>.*?<mi>(.*?)</mi>.*?<mo>(.*?)</mo>.*?</math>',
+        r'\\gcd(\1, \2)',
+        html_content,
+        flags=re.DOTALL
+    )
+    
+    latex = re.sub(
+        r'<math.*?>.*?<mi>(.*?)</mi>.*?<mo>(.*?)</mo>.*?<mi>(.*?)</mi>.*?</math>',
+        r'$$\2$$',
+        latex,
+        flags=re.DOTALL
+    )
+    return latex
 
 
 def concat_contents(ls):\
