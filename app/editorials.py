@@ -1,4 +1,5 @@
 import json
+import codeforces_wrapper
 from playwright.sync_api import sync_playwright, Playwright
 
 def convert_mathjax_to_latex(element):
@@ -12,39 +13,45 @@ def convert_mathjax_to_latex(element):
     )
     return latex
 
-def parse_page(page):
-    # Evaluate the script in the page's context
-    page_content = page.evaluate('''() => {
-        function convertMathJaxToLaTeX(element) {
+def parse_page(page, contest):
+    # Pass the contest number as a parameter to the page.evaluate function
+    page_content = page.evaluate(f'''(contest) => {{
+        function convertMathJaxToLaTeX(element) {{
             let latex = element.innerHTML
-                .replace(/<math.*?>.*?<mi>(.*?)<\/mi>.*?<mi>(.*?)<\/mi>.*?<mo>(.*?)<\/mo>.*?<\/math>/g, '\\gcd($1, $2)')
-                .replace(/<math.*?>.*?<mi>(.*?)<\/mi>.*?<mo>(.*?)<\/mo>.*?<mi>(.*?)<\/mi>.*?<\/math>/g, '$$\\$2$$');
+                .replace(/<math.*?>.*?<mi>(.*?)<\/mi>.*?<mi>(.*?)<\/mi>.*?<mo>(.*?)<\/mo>.*?<\/math>/g, '\\\\gcd($1, $2)')
+                .replace(/<math.*?>.*?<mi>(.*?)<\/mi>.*?<mo>(.*?)<\/mo>.*?<mi>(.*?)<\/mi>.*?<\/math>/g, '$$\\\\$2$$');
             return latex;
-        }
+        }}
 
         var problemStatements = document.querySelectorAll('.problem-statement');
 
         var parsedStatements = [];
+        
+        // Generate the letter suffixes
+        function getLetterSuffix(index) {{
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            return letters[index % letters.length];
+        }}
 
-        problemStatements.forEach(function(problemStatement, index) {
+        problemStatements.forEach(function(problemStatement, index) {{
             var clone = problemStatement.cloneNode(true);
 
             var mathJaxElements = clone.querySelectorAll('.MathJax');
-            mathJaxElements.forEach(mathElement => {
+            mathJaxElements.forEach(mathElement => {{
                 let latex = convertMathJaxToLaTeX(mathElement);
                 mathElement.outerHTML = latex;
-            });
+            }});
 
             var text = clone.innerText.trim();
 
-            parsedStatements.push({
-                index: index + 1,
+            parsedStatements.push({{
+                index: contest + getLetterSuffix(index),
                 text: text
-            });
-        });
+            }});
+        }});
 
         return parsedStatements;
-    }''')
+    }}''', contest)
     return page_content
 
 def save_json(content, filename):
@@ -61,26 +68,50 @@ def run(playwright: Playwright):
 
     return page, browser
 
+# Get list of all editorial links for each contest
+def collect_editoral_links(start_num, end_num):
+
+    PROBLEM_LINK = 'https://codeforces.com/problemset/problem/'
+
+    editorial_links = {}
+    for num in range(start_num, end_num + 1):
+        site_id = str(num) + '/A' #use problem A in the contest for tutorial
+
+        try:
+            problem = PROBLEM_LINK + site_id
+            editorial = codeforces_wrapper.get_editorial_link(problem)
+            if not editorial:
+                print("No editoral for: " + str(num))
+                continue
+            editorial_links[num] = editorial
+
+        except Exception as e:
+            print(f"Error fetching data for id {num}: {e}")
+
+    return editorial_links
+
 
 def main():
-    urls = [
-        'https://codeforces.com/blog/entry/56294',
-    ]
+    
+    urls = collect_editoral_links(1202, 1203)
+    print(urls)
 
     with sync_playwright() as p:
         page, browser = run(p)
 
         all_parsed_statements = []
-        for i, url in enumerate(urls):
+        for contest, url in urls.items():
+            page = browser.new_page()
+            print(url)
             page.goto(url)
             page.wait_for_timeout(100) # Wait to allow page to run
-            parsed_statements = parse_page(page)
+            parsed_statements = parse_page(page, contest)
             all_parsed_statements.extend(parsed_statements)
 
-            # Optionally, save all statements to a single file
-            save_json(all_parsed_statements, '../editorials.json')
+        print(all_parsed_statements)
+        save_json(all_parsed_statements, '../editorials.json')
 
-            browser.close()
+        browser.close()
 
 if __name__ == '__main__':
     main()
