@@ -22,7 +22,6 @@ def parse_problem(problem_link):
 
 
 def get_editorial_link(problem_link):
-    # print(problem_link)
     session = HTMLSession()
     markup = session.get(problem_link).text
     soup = bs4.BeautifulSoup(markup, "html.parser")

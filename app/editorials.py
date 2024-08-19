@@ -75,25 +75,31 @@ def collect_editoral_links(start_num, end_num):
 
     editorial_links = {}
     for num in range(start_num, end_num + 1):
-        site_id = str(num) + '/A' #use problem A in the contest for tutorial
+        problem_found = False
+        for suffix in ['A', 'B', 'C']:  # Try A, B, then C
+            site_id = f"{num}/{suffix}"  # Use the problem in the contest for the tutorial
 
-        try:
-            problem = PROBLEM_LINK + site_id
-            editorial = codeforces_wrapper.get_editorial_link(problem)
-            if not editorial:
-                print("No editoral for: " + str(num))
-                continue
-            editorial_links[num] = editorial
+            try:
+                problem = PROBLEM_LINK + site_id
+                editorial = codeforces_wrapper.get_editorial_link(problem)
+                if editorial: 
+                    editorial_links[num] = editorial
+                    print(f"Editorial found for: {num}{suffix}")
+                    problem_found = True
+                    break
 
-        except Exception as e:
-            print(f"Error fetching data for id {num}: {e}")
+            except Exception as e:
+                print(f"Error fetching data for id {num}{suffix}: {e}")
+            
+        if not problem_found:
+            print(f"No editorial found for any problem in contest {num}")
 
     return editorial_links
 
 
 def main():
     
-    urls = collect_editoral_links(1202, 1203)
+    urls = collect_editoral_links(1, 10)
     print(urls)
 
     with sync_playwright() as p:
@@ -104,7 +110,7 @@ def main():
             page = browser.new_page()
             print(url)
             page.goto(url)
-            page.wait_for_timeout(100) # Wait to allow page to run
+            page.wait_for_timeout(100)
             parsed_statements = parse_page(page, contest)
             all_parsed_statements.extend(parsed_statements)
 
