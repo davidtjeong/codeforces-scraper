@@ -1,4 +1,5 @@
 import bs4
+from requests import RequestException
 from requests_html import HTMLSession
 from playwright.sync_api import sync_playwright, Playwright
 import re
@@ -23,8 +24,17 @@ def parse_problem(problem_link):
 
 def get_editorial_link(problem_link):
     session = HTMLSession()
-    markup = session.get(problem_link).text
-    soup = bs4.BeautifulSoup(markup, "html.parser")
+    try:
+        response = session.get(problem_link)
+        response.raise_for_status()
+        markup = response.text
+        soup = bs4.BeautifulSoup(markup, "html.parser")
+    except RequestException as e:
+        print(f"An error occurred: {e}")
+        return None
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return None
 
     links = soup.find_all('a')
     tutorial_link = None
