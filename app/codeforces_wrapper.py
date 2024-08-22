@@ -31,14 +31,14 @@ def get_editorial_link(problem_link):
     for link in links:
         if 'Tutorial' in link.get_text():
             tutorial_link = link.get('href')
+            if not tutorial_link.startswith("/blog/entry"):
+                tutorial_link = None
+                continue
             if "codeforces" not in tutorial_link:
                 tutorial_link = "https://codeforces.com" + tutorial_link
             break
     
-    if tutorial_link:
-        return tutorial_link
-    else:
-        return
+    return tutorial_link if tutorial_link else None
     
 
 def split_limit(soup):

@@ -77,7 +77,7 @@ def collect_editoral_links(start_num, end_num):
     for num in range(start_num, end_num + 1):
         problem_found = False
         for suffix in ['A', 'B', 'C']:  # Try A, B, then C
-            site_id = f"{num}/{suffix}"  # Use the problem in the contest for the tutorial
+            site_id = f"{num}/{suffix}" 
 
             try:
                 problem = PROBLEM_LINK + site_id
@@ -99,7 +99,7 @@ def collect_editoral_links(start_num, end_num):
 
 def main():
     
-    urls = collect_editoral_links(1, 10)
+    urls = collect_editoral_links(800, 805)
     print(urls)
 
     with sync_playwright() as p:
@@ -113,6 +113,7 @@ def main():
             page.wait_for_timeout(100)
             parsed_statements = parse_page(page, contest)
             all_parsed_statements.extend(parsed_statements)
+            page.close()
 
         print(all_parsed_statements)
         save_json(all_parsed_statements, '../editorials.json')
