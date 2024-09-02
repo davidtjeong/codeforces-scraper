@@ -99,7 +99,7 @@ def collect_editoral_links(start_num, end_num):
 
 def main():
     
-    urls = collect_editoral_links(800, 805)
+    urls = collect_editoral_links(900, 905)
     print(urls)
 
     with sync_playwright() as p:
