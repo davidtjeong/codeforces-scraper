@@ -1,7 +1,7 @@
 {
-    "900A": {
+    "2000A": {
         "problem": {
-            "name": "A. Find Extra One",
+            "name": "A. Primary Task",
             "time_limit": {
                 "value": 1,
                 "unit": "second"
@@ -10,68 +10,28 @@
                 "value": 256,
                 "unit": "megabytes"
             },
-            "description": "You have n distinct points on a plane, none of them lie on OY axis. Check that there is a point after removal of which the remaining points are located on one side of the OY axis.",
-            "inputSpecification": "The first line contains a single positive integer n (2n105).The following n lines contain coordinates of the points. The i-th of these lines contains two single integers xi and yi (|xi|,|yi|109, xi0). No two points coincide.",
-            "outputSpecification": "Print \"Yes\" if there is such a point, \"No\"  otherwise.You can print every letter in any case (upper or lower).",
+            "description": "Dmitry wrote down tt integers on the board, and that is good. He is sure that he lost an important integer nn among them, and that is bad.The integer nn had the form 10^x\\text{10^x} (x2x \\ge 2), where the symbol '^\\text{^}' denotes exponentiation.. Something went wrong, and Dmitry missed the symbol '^\\text{^}' when writing the important integer. For example, instead of the integer 10510^5, he would have written 105105, and instead of 101910^{19}, he would have written 10191019.Dmitry wants to understand which of the integers on the board could have been the important integer and which could not.",
+            "inputSpecification": "The first line of the input contains one integer tt (1t1041 \\le t \\le 10^4) the number of integers on the board.The next tt lines each contain an integer aa (1a100001 \\le a \\le 10000) the next integer from the board.",
+            "outputSpecification": "For each integer on the board, output \"YES\" if it could have been the important integer and \"NO\" otherwise.You may output each letter in any case (lowercase or uppercase). For example, the strings \"yEs\", \"yes\", \"Yes\", and \"YES\" will be accepted as a positive answer.",
             "public_tests": [
                 {
-                    "input": "31 1-1 -12 -1",
-                    "output": "Yes"
-                },
-                {
-                    "input": "41 12 2-1 1-2 2",
-                    "output": "No"
-                },
-                {
-                    "input": "31 22 14 60",
-                    "output": "Yes"
+                    "input": "71001010101105203310191002",
+                    "output": "NO\nYES\nNO\nYES\nNO\nYES\nNO\n"
                 }
             ],
-            "note": "In the first example the second point can be removed.In the second example there is no suitable for the condition point.In the third example any point can be removed.",
+            "note": null,
             "tags": [
-                "geometry",
                 "implementation",
+                "math",
+                "strings",
                 "*800"
             ]
         },
-        "editorial": "Count number of points located on left and right side of the OY axis. Answer will be \"Yes\" if number of points of one of the sets is smaller than two, \"No\" \u2014 otherwise.Time complexity O(n)."
+        "editorial": "You need to check that the number has the form '$$$\\text{10x}$$$', where $$$x$$$ is an integer without leading zeros. This means it must start with '10'; if the length of the number is $$$3$$$, then the third digit must be at least $$$2$$$; if the length is greater, then the third digit must be at least $$$1$$$ (all such numbers $$$x$$$ are at least $$$10$$$).Additionally, under these constraints, you can simply check that for the given number $$$a$$$, either $$$102 \\le a \\le 109$$$ or $$$1010 \\le a \\le 1099$$$ holds true."
     },
-    "900B": {
+    "2000B": {
         "problem": {
-            "name": "B. Position in Fraction",
-            "time_limit": {
-                "value": 1,
-                "unit": "second"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "You have a fraction . You need to find the first occurrence of digit c into decimal notation of the fraction after decimal point.",
-            "inputSpecification": "The first contains three single positive integers a, b, c (1a&lt;b105, 0c9).",
-            "outputSpecification": "Print position of the first occurrence of digit c into the fraction. Positions are numbered from 1 after decimal point. It there is no such position, print -1.",
-            "public_tests": [
-                {
-                    "input": "1 2 0",
-                    "output": "2"
-                },
-                {
-                    "input": "2 3 7",
-                    "output": "-1"
-                }
-            ],
-            "note": "The fraction in the first example has the following decimal notation: . The first zero stands on second position.The fraction in the second example has the following decimal notation: . There is no digit 7 in decimal notation of the fraction. ",
-            "tags": [
-                "math",
-                "number theory",
-                "*1300"
-            ]
-        },
-        "editorial": "In this task you should complete long division and stop, when one period passed. Period can't be more than b by pigeonhole principle. So you need to complete b iterations and if c digit hasn't been met, print \u2009-\u20091.Time complexity O(b)."
-    },
-    "900C": {
-        "problem": {
-            "name": "C. Remove Extra One",
+            "name": "B. Seating in a Bus",
             "time_limit": {
                 "value": 2,
                 "unit": "seconds"
@@ -80,205 +40,26 @@
                 "value": 256,
                 "unit": "megabytes"
             },
-            "description": "You are given a permutation p of length n. Remove one element from permutation to make the number of records the maximum possible.We remind that in a sequence of numbers a1,a2,...,ak the element ai is a record if for every integer j (1j&lt;i) the following holds: aj&lt;ai. ",
-            "inputSpecification": "The first line contains the only integer n (1n105) the length of the permutation.The second line contains n integers p1,p2,...,pn (1pin) the permutation. All the integers are distinct.",
-            "outputSpecification": "Print the only integer the element that should be removed to make the number of records the maximum possible. If there are multiple such elements, print the smallest one.",
+            "description": "In Berland, a bus consists of a row of nnn seats numbered from 111 to nnn. Passengers are advised to always board the bus following these rules:   If there are no occupied seats in the bus, a passenger can sit in any free seat; Otherwise, a passenger should sit in any free seat that has at least one occupied neighboring seat. In other words, a passenger can sit in a seat with index iii (1in1in1 \\le i \\le n) only if at least one of the seats with indices i1i1i-1 or i+1i+1i+1 is occupied. Today, nnn passengers boarded the bus. The array aaa chronologically records the seat numbers they occupied. That is, a1a1a_1 contains the seat number where the first passenger sat, a2a2a_2  the seat number where the second passenger sat, and so on.You know the contents of the array aaa. Determine whether all passengers followed the recommendations.For example, if n=5n=5n = 5, and aaa = [5,4,2,1,35,4,2,1,35, 4, 2, 1, 3], then the recommendations were not followed, as the 333-rd passenger sat in seat number 222, while the neighboring seats with numbers 111 and 333 were free.",
+            "inputSpecification": "The first line of input contains a single integer ttt (1t1041t1041 \\le t \\le 10^4)  the number of test cases.The following describes the input test cases.The first line of each test case contains exactly one integer nnn (1n21051n21051 \\le n \\le 2 \\cdot 10^5)  the number of seats in the bus and the number of passengers who boarded the bus.The second line of each test case contains nnn distinct integers aiaia_i (1ain1ain1 \\le a_i \\le n)  the seats that the passengers occupied in chronological order.It is guaranteed that the sum of nnn values across all test cases does not exceed 210521052 \\cdot 10^5, and that no passenger sits in an already occupied seat.",
+            "outputSpecification": "For each test case, output on a separate line:   \"YES\", if all passengers followed the recommendations;  \"NO\" otherwise. You may output the answer in any case (for example, the strings \"yEs\", \"yes\", \"Yes\", and \"YES\" will be recognized as a positive answer).",
             "public_tests": [
                 {
-                    "input": "11",
-                    "output": "1"
-                },
-                {
-                    "input": "55 1 2 3 4",
-                    "output": "5"
+                    "input": "455 4 2 1 332 3 142 3 1 451 2 3 5 4",
+                    "output": "NO\nYES\nYES\nNO"
                 }
             ],
-            "note": "In the first example the only element can be removed.",
+            "note": "The first test case is explained in the problem statement.",
             "tags": [
-                "brute force",
-                "data structures",
-                "math",
-                "*1700"
-            ]
-        },
-        "editorial": "In this problem you have to find an element after which removal the number of records is maximum possible.Let ri be an array consisting of 0 and 1 depending on whether the i-th element was a record initially or not. We can compute it easily in O(N).Let xi be the difference between the number of records after removal the i-th element and initial number of records.Let's think of how does removal of ai influence the array ri. First of all, ri becomes 0. rj (j\u2009<\u2009i) do not change in this case. Some of rj (j\u2009>\u2009i), change from 0 to 1. These elements are not records initially, but become records after the removal. These elements are elements which have only one greater element in front of them\u00a0\u2014 ai.Here follows an O(n2) solution. Let's fix ai\u00a0\u2014 the element we are going to remove. Let xi = \u2009-\u2009ri \u2009+\u2009 the number of such j that j\u2009>\u2009i, ai\u2009>\u2009aj, and for all k (k\u2009\u2260\u2009i,\u2009k\u2009<\u2009j) ak\u2009<\u2009aj. We can compute this just looping through all j and keeping the maximum over all elements but the i-th.Now note that it's not required to fix ai. rj can become 1 from 0 only when a certain element from the left is removed. Let's loop through all aj and determine if there is an element to the left such that it is greater than aj, but all other elements are less than aj. We can check this using ordered set. If there is such a ai, then increase xi by 1. After the loop the array xi is fully computed, so we can just find the element which brings the maximum number of records, and minimum among such."
-    },
-    "900D": {
-        "problem": {
-            "name": "D. Unusual Sequences",
-            "time_limit": {
-                "value": 1,
-                "unit": "second"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Count the number of distinct sequences a1,a2,...,an (1ai) consisting of positive integers such that gcd(a1,a2,...,an)=x and . As this number could be large, print the answer modulo 109+7.gcd here means the greatest common divisor.",
-            "inputSpecification": "The only line contains two positive integers x and y (1x,y109).",
-            "outputSpecification": "Print the number of such sequences modulo 109+7.",
-            "public_tests": [
-                {
-                    "input": "3 9",
-                    "output": "3"
-                },
-                {
-                    "input": "5 8",
-                    "output": "0"
-                }
-            ],
-            "note": "There are three suitable sequences in the first test: (3,3,3), (3,6), (6,3).There are no suitable sequences in the second test.",
-            "tags": [
-                "bitmasks",
-                "combinatorics",
-                "dp",
-                "math",
-                "number theory",
-                "*2000"
-            ]
-        },
-        "editorial": "It's obvious that if y is not divisible by x, then the answer is 0. Let f(t) be the number of sequences such that their sum is t, and gcd is 1. Then the answer for the problem is .How to compute f(t)?. Let's denote the number of sequences such that their sum is t as g(t). Then g(t) is 2(t\u2009-\u20091): represent all integers in the sequence in unary system with zeros, and split them with t\u2009-\u20091 ones. Note that , where {ti} are divisors of t. Then .What's the complexity?. We know that the number of divisors of t is not greater than . We can also note than every divisor of divisor of t is a divisor of t. Thus we need for compute only f(ti) for every ti|t. Thus computing f(ti) takes  steps when all f(tj), tj\u2009<\u2009ti are already computed. The total complexity is , but on practice it works much faster than one can expect.Also, we can use M\u00f6bius function to solve this problem. This solution has a better complexity, but we will leave this solution as an exercise for readers."
-    },
-    "900E": {
-        "problem": {
-            "name": "E. Maximum Questions",
-            "time_limit": {
-                "value": 2,
-                "unit": "seconds"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Vasya wrote down two strings s of length n and t of length m consisting of small English letters 'a' and 'b'. What is more, he knows that string t has a form \"abab...\", namely there are letters 'a' on odd positions and letters 'b' on even positions.Suddenly in the morning, Vasya found that somebody spoiled his string. Some letters of the string s were replaced by character '?'.Let's call a sequence of positions i,i+1,...,i+m-1 as occurrence of string t in s, if 1in-m+1 and t1=si,t2=si+1,...,tm=si+m-1.The boy defines the beauty of the string s as maximum number of disjoint occurrences of string t in s. Vasya can replace some letters '?' with 'a' or 'b' (letters on different positions can be replaced with different letter). Vasya wants to make some replacements in such a way that beauty of string s is maximum possible. From all such options, he wants to choose one with the minimum number of replacements. Find the number of replacements he should make.",
-            "inputSpecification": "The first line contains a single integer n (1n105) the length of s.The second line contains the string s of length n. It contains small English letters 'a', 'b' and characters '?' only.The third line contains a single integer m (1m105) the length of t. The string t contains letters 'a' on odd positions and 'b' on even positions.",
-            "outputSpecification": "Print the only integer the minimum number of replacements Vasya has to perform to make the beauty of string s the maximum possible.",
-            "public_tests": [
-                {
-                    "input": "5bb?a?1",
-                    "output": "2"
-                },
-                {
-                    "input": "9ab??ab???3",
-                    "output": "2"
-                }
-            ],
-            "note": "In the first sample string t has a form 'a'. The only optimal option is to replace all characters '?' by 'a'.In the second sample using two replacements we can make string equal to \"aba?aba??\". It is impossible to get more than two occurrences.",
-            "tags": [
-                "data structures",
-                "dp",
-                "strings",
-                "*2100"
-            ]
-        },
-        "editorial": "Let's find all positions i in string s such that occurrence t can start at position i after making some replacements.How to find them? As t has a form \"abab...\" letters si,\u2009si\u2009+\u20092,\u2009si\u2009+\u20094,\u2009...,\u2009s(i\u2009+\u2009m\u2009-\u20091|i\u2009+\u2009m\u2009-\u20092) should be equal to '?' or 'a' and si\u2009+\u20091,\u2009si\u2009+\u20093...,\u2009s(i\u2009+\u2009m\u2009-\u20091|i\u2009+\u2009m\u2009-\u20092) should be equal to '?' or 'b'. Let's calculate f[i][\u0441]\u00a0\u2014 how many consecutive letters si,\u2009si\u2009+\u20092,\u2009...,\u2009s(f[i][c]\u2009-\u20091)\u00b72 are equal to '?' or c.Than it is left to verify for position i or f[i][a]\u2009\u2265\u2009cell(n\u2009/\u20092) and f[i][b]\u2009\u2265\u2009floor(n\u2009/\u20092). We found all positions where occurrence of t can start.Remaining task can be solved using dynamic programming. Let dp[i][j]\u00a0\u2014 the minimum number of replacements should be done that the number of occurrences in prefix i is exactly maximum possible minus j. How to calculate this dp? If from position i\u2009+\u20091 can be started occurrence than dp[i\u2009+\u2009m][MaxOccuri\u2009+\u2009m\u2009-\u2009(MaxOccuri\u2009-\u2009j)]\u2009=\u2009best(dp[i\u2009+\u2009m][MaxOccuri\u2009+\u2009m\u2009-\u2009(MaxOccuri\u2009-\u2009j)],\u2009dp[i][j]\u2009+\u2009CountQuestionsi\u2009+\u20091,\u2009i\u2009+\u2009m). Where CountQuestionsi,\u2009j means the number of letter '?' in substring from position i to j and MaxOccuri means the maximum number of occurrences in prefix from position 1 to i, that can be calculated greedily.Actually considering j\u2009>\u20091 is redundant. Really, if we consider such set of occurrences that exists prefix for which the number of occurrences at least two less than maximum possible than we always can find the larger set of occurrences taking the maximum possible in this prefix and maybe deleting one that intersects with the prefix.The answer is dp[n][0].Time complexity O(n)."
-    },
-    "901A": {
-        "problem": {
-            "name": "A. Hashing Trees",
-            "time_limit": {
-                "value": 2,
-                "unit": "seconds"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Sasha is taking part in a programming competition. In one of the problems she should check if some rooted trees are isomorphic or not. She has never seen this problem before, but, being an experienced participant, she guessed that she should match trees to some sequences and then compare these sequences instead of trees. Sasha wants to match each tree with a sequence a0,a1,...,ah, where h is the height of the tree, and ai equals to the number of vertices that are at distance of i edges from root. Unfortunately, this time Sasha's intuition was wrong, and there could be several trees matching the same sequence. To show it, you need to write a program that, given the sequence ai, builds two non-isomorphic rooted trees that match that sequence, or determines that there is only one such tree.Two rooted trees are isomorphic, if you can reenumerate the vertices of the first one in such a way, that the index of the root becomes equal the index of the root of the second tree, and these two trees become equal.The height of a rooted tree is the maximum number of edges on a path from the root to any other vertex.",
-            "inputSpecification": "The first line contains a single integer h (2h105) the height of the tree.The second line contains h+1 integers the sequence a0,a1,...,ah (1ai2105). The sum of all ai does not exceed 2105. It is guaranteed that there is at least one tree matching this sequence.",
-            "outputSpecification": "If there is only one tree matching this sequence, print \"perfect\".Otherwise print \"ambiguous\" in the first line. In the second and in the third line print descriptions of two trees in the following format: in one line print  integers, the k-th of them should be the parent of vertex k or be equal to zero, if the k-th vertex is the root.These treese should be non-isomorphic and should match the given sequence.",
-            "public_tests": [
-                {
-                    "input": "21 1 1",
-                    "output": "perfect"
-                },
-                {
-                    "input": "21 2 2",
-                    "output": "ambiguous0 1 1 3 30 1 1 3 2"
-                }
-            ],
-            "note": "The only tree in the first example and the two printed trees from the second example are shown on the picture:",
-            "tags": [
-                "constructive algorithms",
-                "trees",
-                "*1500"
-            ]
-        },
-        "editorial": "Note that if we can get to some point x, then we can get to all points <= x. So we can support the rightmost point where we can get to. Then if this point can use the teleport (if this point is to the right of the teleport), we'll try to move it (If the limit of the teleport is to the right of the current point, then move it there). Then in the end we need to check that the rightmost point where we can get is equal to M."
-    },
-    "901B": {
-        "problem": {
-            "name": "B. GCD of Polynomials",
-            "time_limit": {
-                "value": 2,
-                "unit": "seconds"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Suppose you have two polynomials  and . Then polynomial  can be uniquely represented in the following way:This can be done using long division. Here,  denotes the degree of polynomial P(x).  is called the remainder of division of polynomial  by polynomial , it is also denoted as . Since there is a way to divide polynomials with remainder, we can define Euclid's algorithm of finding the greatest common divisor of two polynomials. The algorithm takes two polynomials . If the polynomial  is zero, the result is , otherwise the result is the value the algorithm returns for pair . On each step the degree of the second argument decreases, so the algorithm works in finite number of steps. But how large that number could be? You are to answer this question. You are given an integer n. You have to build two polynomials with degrees not greater than n, such that their coefficients are integers not exceeding 1 by their absolute value, the leading coefficients (ones with the greatest power of x) are equal to one, and the described Euclid's algorithm performs exactly n steps finding their greatest common divisor. Moreover, the degree of the first polynomial should be greater than the degree of the second. By a step of the algorithm we mean the transition from pair  to pair . ",
-            "inputSpecification": "You are given a single integer n (1n150) the number of steps of the algorithm you need to reach.",
-            "outputSpecification": "Print two polynomials in the following format.In the first line print a single integer m (0mn) the degree of the polynomial. In the second line print m+1 integers between -1 and 1 the coefficients of the polynomial, from constant to leading. The degree of the first polynomial should be greater than the degree of the second polynomial, the leading coefficients should be equal to 1. Euclid's algorithm should perform exactly n steps when called using these polynomials.If there is no answer for the given n, print -1.If there are multiple answer, print any of them.",
-            "public_tests": [
-                {
-                    "input": "1",
-                    "output": "10 101"
-                },
-                {
-                    "input": "2",
-                    "output": "2-1 0 110 1"
-                }
-            ],
-            "note": "In the second example you can print polynomials x2-1 and x. The sequence of transitions is(x2-1,x)(x,-1)(-1,0).There are two steps in it.",
-            "tags": [
-                "constructive algorithms",
-                "math",
-                "*2200"
-            ]
-        },
-        "editorial": "Consider the process from the end, we will \"delete\" any subtree from the tree, whose color of the ancestor of the highest vertex differs from the color of the highest vertex and the colors of all vertices in the subtree are the same. Thus, we can show that the answer is the number of edges whose ends have different colors + 1."
-    },
-    "901C": {
-        "problem": {
-            "name": "C. Bipartite Segments",
-            "time_limit": {
-                "value": 2,
-                "unit": "seconds"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "You are given an undirected graph with n vertices. There are no edge-simple cycles with the even length in it. In other words, there are no cycles of even length that pass each edge at most once. Let's enumerate vertices from 1 to n. You have to answer q queries. Each query is described by a segment of vertices [l;r], and you have to count the number of its subsegments [x;y] (lxyr), such that if we delete all vertices except the segment of vertices [x;y] (including x and y) and edges between them, the resulting graph is bipartite.",
-            "inputSpecification": "The first line contains two integers n and m (1n3105, 1m3105) the number of vertices and the number of edges in the graph.The next m lines describe edges in the graph. The i-th of these lines contains two integers ai and bi (1ai,bin; aibi), denoting an edge between vertices ai and bi. It is guaranteed that this graph does not contain edge-simple cycles of even length.The next line contains a single integer q (1q3105) the number of queries.The next q lines contain queries. The i-th of these lines contains two integers li and ri (1lirin) the query parameters.",
-            "outputSpecification": "Print q numbers, each in new line: the i-th of them should be the number of subsegments [x;y] (lixyri), such that the graph that only includes vertices from segment [x;y] and edges between them is bipartite.",
-            "public_tests": [
-                {
-                    "input": "6 61 22 33 14 55 66 431 34 61 6",
-                    "output": "5514"
-                },
-                {
-                    "input": "8 91 22 33 14 55 66 77 88 47 231 81 43 8",
-                    "output": "27819"
-                }
-            ],
-            "note": "The first example is shown on the picture below:For the first query, all subsegments of [1;3], except this segment itself, are suitable.For the first query, all subsegments of [4;6], except this segment itself, are suitable.For the third query, all subsegments of [1;6] are suitable, except [1;3], [1;4], [1;5], [1;6], [2;6], [3;6], [4;6].The second example is shown on the picture below:",
-            "tags": [
-                "binary search",
-                "data structures",
-                "dfs and similar",
-                "dsu",
-                "graphs",
                 "two pointers",
-                "*2300"
+                "*800"
             ]
         },
-        "editorial": "There are many ways to solve the problem. First of all you should build any single tree. To do this, you first build the longest path from the root and then attach remained vertices on proper heights. Thus each vertex is either on the longest path or has parent on this path. To build the second tree you should use different vertices from previous levels during construction to make it different from first tree. This is always possible if there are two consecutive ai\u2009>\u20091. Otherwise the tree is determined uniquely by ai sequence."
+        "editorial": "To solve the problem, it is enough to use an array $$$used$$$ of size $$$2 \\cdot 10^5 + 1$$$ (maximal value $$$n + 1$$$) consisting of boolean variables. When a passenger gets on the bus to seat $$$a_i$$$, we will replace the value of $$$used[a_i]$$$ with true. Then, for all passengers, starting from the second one, we should check that at least one of the existing elements $$$used[a_i - 1]$$$ or $$$used[a_i + 1]$$$ has the value true. If this condition is not satisfied, the answer to the problem is \"NO\". If at least $$$1$$$ occupied neighbouring seat always existed for all passengers at the moment they took their seat \u2014 the answer is \"YES\"."
     },
-    "901D": {
+    "2000C": {
         "problem": {
-            "name": "D. Weighting a Tree",
+            "name": "C. Numeric String Template",
             "time_limit": {
                 "value": 2,
                 "unit": "seconds"
@@ -287,444 +68,114 @@
                 "value": 256,
                 "unit": "megabytes"
             },
-            "description": "You are given a connected undirected graph with n vertices and m edges. The vertices are enumerated from 1 to n. You are given n integers c1,c2,...,cn, each of them is between -n and n, inclusive. It is also guaranteed that the parity of cv equals the parity of degree of vertex v. The degree of a vertex is the number of edges connected to it.You are to write a weight between -2n2 and 2n2 (inclusive) on each edge in such a way, that for each vertex v the sum of weights on edges connected to this vertex is equal to cv, or determine that this is impossible.",
-            "inputSpecification": "The first line contains two integers n and m (2n105, n-1m105) the number of vertices and the number of edges.The next line contains n integers c1,c2,...,cn (-ncin), where ci is the required sum of weights of edges connected to vertex i. It is guaranteed that the parity of ci equals the parity of degree of vertex i.The next m lines describe edges of the graph. The i-th of these lines contains two integers ai and bi (1ai,bin; aibi), meaning that the i-th edge connects vertices ai and bi.It is guaranteed that the given graph is connected and does not contain loops and multiple edges.",
-            "outputSpecification": "If there is no solution, print \"NO\".Otherwise print \"YES\" and then m lines, the i-th of them is the weight of the i-th edge wi (-2n2wi2n2).",
+            "description": "Kristina has an array aa, called a template, consisting of nn integers. She also has mm strings, each consisting only of lowercase Latin letters. The strings are numbered from 11 to mm. She wants to check which strings match the template.A string ss is considered to match the template if all of the following conditions are simultaneously satisfied:  The length of the string ss is equal to the number of elements in the array aa. The same numbers from aa correspond to the same symbols from ss. So, if ai=aja_i = a_j, then si=sjs_i = s_j for (1i,jn1 \\le i, j \\le n). The same symbols from ss correspond to the same numbers from aa. So, if si=sjs_i = s_j, then ai=aja_i = a_j for (1i,jn1 \\le i, j \\le n). In other words, there must be a one-to-one correspondence between the characters of the string and the elements of the array.For example, if aa = [3,5,2,1,33, 5, 2, 1, 3], then the string \"abfda\" matches the template, while the string \"afbfa\" does not, since the character \"f\" corresponds to both numbers 11 and 55.",
+            "inputSpecification": "The first line of input contains a single integer tt (1t1041 \\le t \\le 10^4) the number of test cases.The following descriptions are for the test cases.The first line of each test case contains a single integer nn (1n21051 \\le n \\le 2 \\cdot 10^5)  the number of elements in the array aa.The second line of each test case contains exactly nn integers aia_i (109ai109-10^9 \\le a_i \\le 10^9)  the elements of the array aa.The third line of each test case contains a single integer mm (1m21051 \\le m \\le 2 \\cdot 10^5)  the number of strings to check for template matching.Following are mm strings, each containing a non-empty string sjs_j (1|sj|21051 \\le |s_j| \\le 2 \\cdot 10^5), consisting of lowercase Latin letters.It is guaranteed that the sum of nn across all test cases does not exceed 21052 \\cdot 10^5, and that the sum of the lengths of all strings does not exceed 21052 \\cdot 10^5.",
+            "outputSpecification": "For each test case, output mm lines. On the ii-th line (1im1 \\le i \\le m) output:   \"YES\", if the string with index ii matches the template;  \"NO\" otherwise. You may output the answer in any case (for example, the strings \"yEs\", \"yes\", \"Yes\", and \"YES\" will be recognized as a positive answer).",
             "public_tests": [
                 {
-                    "input": "3 32 2 21 22 31 3",
-                    "output": "YES111"
-                },
-                {
-                    "input": "4 3-1 0 2 11 22 33 4",
-                    "output": "YES-111"
-                },
-                {
-                    "input": "6 63 5 5 5 1 51 43 24 34 53 55 6",
-                    "output": "YES353-1-35"
-                },
-                {
-                    "input": "4 44 4 2 41 22 33 44 1",
-                    "output": "NO"
+                    "input": "353 5 2 1 32abfdaafbfa21 23ababcaa45 -3 5 -34aaaabcbcabacbcb",
+                    "output": "YES\nNO\nYES\nNO\nNO\nNO\nYES\nNO\nYES"
                 }
             ],
-            "note": null,
-            "tags": [
-                "constructive algorithms",
-                "dfs and similar",
-                "graphs",
-                "*2700"
-            ]
-        },
-        "editorial": "As for integers it is well known that worst case are consequent Fibonacci's numbers Fn\u2009+\u20091\u2009=\u2009Fn\u2009+\u2009Fn\u2009-\u20091. Solutions to this problem are based on the same idea. There were two main intended solutions. First of all you should note that sequencep0\u2009=\u20091,\u2009p1\u2009=\u2009x,\u2009 pn\u2009+\u20091\u2009=\u2009x\u00b7pn\u2009\u00b1\u2009pn\u2009-\u20091Gives us the family of solutions, we just have to output pn and pn\u2009-\u20091. It can be directly checked for given constraints that you can always choose \u2009+\u2009 or \u2009-\u2009 to satisfy coefficients constraints.The other solution is the same sequence but you use \u2009+\u2009 instead of \u2009\u00b1\u2009 and take coefficients modulo 2. That's true because if remainders sequence has k steps while you consider numbers by some modulo it will have at least k steps in rational numbers. So the second intended solution isp0\u2009=\u20091,\u2009p1\u2009=\u2009x,"
-    },
-    "901E": {
-        "problem": {
-            "name": "E. Cyclic Cipher",
-            "time_limit": {
-                "value": 5,
-                "unit": "seconds"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "  Senor Vorpal Kickass'o invented an innovative method to encrypt integer sequences of length n. To encrypt a sequence, one has to choose a secret sequence , that acts as a key.Vorpal is very selective, so the key should be such a sequence bi, that its cyclic shifts are linearly independent, that is, there is no non-zero set of coefficients x0,x1,...,xn-1, such that  for all k at the same time.After that for a sequence  you should build the following cipher:In other words, you are to compute the quadratic deviation between each cyclic shift of bi and the sequence ai. The resulting sequence is the Kickass's cipher. The cipher is in development right now and Vorpal wants to decipher a sequence after it has been encrypted. You are to solve this problem for him. You are given sequences ci and bi. You are to find all suitable sequences ai.",
-            "inputSpecification": "The first line contains a single integer n ().The second line contains n integers b0,b1,...,bn-1 ().The third line contains n integers c0,c1,...,cn-1 ().It is guaranteed that all cyclic shifts of sequence bi are linearly independent.",
-            "outputSpecification": "In the first line print a single integer k the number of sequences ai, such that after encrypting them with key bi you get the sequence ci.After that in each of k next lines print n integers a0,a1,...,an-1. Print the sequences in lexicographical order.Note that k could be equal to 0.",
-            "public_tests": [
-                {
-                    "input": "110",
-                    "output": "11"
-                },
-                {
-                    "input": "110081",
-                    "output": "291109"
-                },
-                {
-                    "input": "31 1 3165 185 197",
-                    "output": "2-6 -9 -18 5 13"
-                }
-            ],
-            "note": null,
-            "tags": [
-                "fft",
-                "math",
-                "*3300"
-            ]
-        },
-        "editorial": "If two cycles of odd length intersect, then they can be bypassed so as to obtain an edge-simple cycle of even length.It follows that the given graph is a vertex cactus, with cycles of odd length, then the vertex segment is good - if there is no loop, that the vertex with the minimum number from this cycle is present on this segment and the vertex with the maximum number from this cycle is present on this segment. Then we can select all the cycles, and now we work with the segments.Let us find for each vertex a maximal right boundary such that the interval [i..mxi] is a bipartite graph.Then mxi is equal to the minimal right boundary of the segment, which was opened later i.This can be considered a minimum on the suffix, initially setting for all cycles mx[minimum on the cycle] = maximum on the cycleTo answer the query, we need to take the sum over mxi\u2009-\u2009i\u2009+\u20091 for those who have mxi\u2009\u2265\u2009r and the sum over r\u2009-\u2009i\u2009+\u20091 for those who have mxi\u2009\u2265\u2009rthen we note that mxi increases and we simply need to find the first moment when mxi becomes \u2009\u2265\u2009r (we can do it with binary search)And take two prefix sums - sum of (mxi\u2009-\u2009i\u2009+\u20091) and sum of i."
-    },
-    "902A": {
-        "problem": {
-            "name": "A. Visiting a Friend",
-            "time_limit": {
-                "value": 1,
-                "unit": "second"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Pig is visiting a friend.Pig's house is located at point 0, and his friend's house is located at point m on an axis.Pig can use teleports to move along the axis.To use a teleport, Pig should come to a certain point (where the teleport is located) and choose where to move: for each teleport there is the rightmost point it can move Pig to, this point is known as the limit of the teleport.Formally, a teleport located at point x with limit y can move Pig from point x to any point within the segment [x;y], including the bounds.  Determine if Pig can visit the friend using teleports only, or he should use his car.",
-            "inputSpecification": "The first line contains two integers n and m (1n100,1m100) the number of teleports and the location of the friend's house.The next n lines contain information about teleports.The i-th of these lines contains two integers ai and bi (0aibim), where ai is the location of the i-th teleport, and bi is its limit.It is guaranteed that aiai-1 for every i (2in).",
-            "outputSpecification": "Print \"YES\" if there is a path from Pig's house to his friend's house that uses only teleports, and \"NO\" otherwise.You can print each letter in arbitrary case (upper or lower).",
-            "public_tests": [
-                {
-                    "input": "3 50 22 43 5",
-                    "output": "YES"
-                },
-                {
-                    "input": "3 70 42 56 7",
-                    "output": "NO"
-                }
-            ],
-            "note": "The first example is shown on the picture below:  Pig can use the first teleport from his house (point 0) to reach point 2, then using the second teleport go from point 2 to point 3, then using the third teleport go from point 3 to point 5, where his friend lives.The second example is shown on the picture below:  You can see that there is no path from Pig's house to his friend's house that uses only teleports.",
-            "tags": [
-                "greedy",
-                "implementation",
-                "*1100"
-            ]
-        },
-        "editorial": "Note that if we can get to some point x, then we can get to all points <= x. So we can support the rightmost point where we can get to. Then if this point can use the teleport (if this point is to the right of the teleport), we'll try to move it (If the limit of the teleport is to the right of the current point, then move it there). Then in the end we need to check that the rightmost point where we can get is equal to M."
-    },
-    "902B": {
-        "problem": {
-            "name": "B. Coloring a Tree",
-            "time_limit": {
-                "value": 1,
-                "unit": "second"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "You are given a rooted tree with n vertices. The vertices are numbered from 1 to n, the root is the vertex number 1.Each vertex has a color, let's denote the color of vertex v by cv. Initially cv=0.You have to color the tree into the given colors using the smallest possible number of steps. On each step you can choose a vertex v and a color x, and then color all vectices in the subtree of v (including v itself) in color x. In other words, for every vertex u, such that the path from root to u passes through v, set cu=x.It is guaranteed that you have to color each vertex in a color different from 0.You can learn what a rooted tree is using the link: https://en.wikipedia.org/wiki/Tree_(graph_theory).",
-            "inputSpecification": "The first line contains a single integer n (2n104) the number of vertices in the tree.The second line contains n-1 integers p2,p3,...,pn (1pi&lt;i), where pi means that there is an edge between vertices i and pi.The third line contains n integers c1,c2,...,cn (1cin), where ci is the color you should color the i-th vertex into.It is guaranteed that the given graph is a tree. ",
-            "outputSpecification": "Print a single integer the minimum number of steps you have to perform to color the tree into given colors.",
-            "public_tests": [
-                {
-                    "input": "61 2 2 1 52 1 1 1 1 1",
-                    "output": "3"
-                },
-                {
-                    "input": "71 1 2 3 1 43 3 1 1 1 2 3",
-                    "output": "5"
-                }
-            ],
-            "note": "The tree from the first sample is shown on the picture (numbers are vetices' indices):On first step we color all vertices in the subtree of vertex 1 into color 2 (numbers are colors):On seond step we color all vertices in the subtree of vertex 5 into color 1:On third step we color all vertices in the subtree of vertex 2 into color 1:The tree from the second sample is shown on the picture (numbers are vetices' indices):On first step we color all vertices in the subtree of vertex 1 into color 3 (numbers are colors):On second step we color all vertices in the subtree of vertex 3 into color 1:On third step we color all vertices in the subtree of vertex 6 into color 2:On fourth step we color all vertices in the subtree of vertex 4 into color 1:On fith step we color all vertices in the subtree of vertex 7 into color 3:",
-            "tags": [
-                "dfs and similar",
-                "dsu",
-                "greedy",
-                "*1200"
-            ]
-        },
-        "editorial": "Consider the process from the end, we will \"delete\" any subtree from the tree, whose color of the ancestor of the highest vertex differs from the color of the highest vertex and the colors of all vertices in the subtree are the same. Thus, we can show that the answer is the number of edges whose ends have different colors + 1."
-    },
-    "902C": {
-        "problem": {
-            "name": "C. Hashing Trees",
-            "time_limit": {
-                "value": 2,
-                "unit": "seconds"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Sasha is taking part in a programming competition. In one of the problems she should check if some rooted trees are isomorphic or not. She has never seen this problem before, but, being an experienced participant, she guessed that she should match trees to some sequences and then compare these sequences instead of trees. Sasha wants to match each tree with a sequence a0,a1,...,ah, where h is the height of the tree, and ai equals to the number of vertices that are at distance of i edges from root. Unfortunately, this time Sasha's intuition was wrong, and there could be several trees matching the same sequence. To show it, you need to write a program that, given the sequence ai, builds two non-isomorphic rooted trees that match that sequence, or determines that there is only one such tree.Two rooted trees are isomorphic, if you can reenumerate the vertices of the first one in such a way, that the index of the root becomes equal the index of the root of the second tree, and these two trees become equal.The height of a rooted tree is the maximum number of edges on a path from the root to any other vertex.",
-            "inputSpecification": "The first line contains a single integer h (2h105) the height of the tree.The second line contains h+1 integers the sequence a0,a1,...,ah (1ai2105). The sum of all ai does not exceed 2105. It is guaranteed that there is at least one tree matching this sequence.",
-            "outputSpecification": "If there is only one tree matching this sequence, print \"perfect\".Otherwise print \"ambiguous\" in the first line. In the second and in the third line print descriptions of two trees in the following format: in one line print  integers, the k-th of them should be the parent of vertex k or be equal to zero, if the k-th vertex is the root.These treese should be non-isomorphic and should match the given sequence.",
-            "public_tests": [
-                {
-                    "input": "21 1 1",
-                    "output": "perfect"
-                },
-                {
-                    "input": "21 2 2",
-                    "output": "ambiguous0 1 1 3 30 1 1 3 2"
-                }
-            ],
-            "note": "The only tree in the first example and the two printed trees from the second example are shown on the picture:",
-            "tags": [
-                "constructive algorithms",
-                "*1500"
-            ]
-        },
-        "editorial": "There are many ways to solve the problem. First of all you should build any single tree. To do this, you first build the longest path from the root and then attach remained vertices on proper heights. Thus each vertex is either on the longest path or has parent on this path. To build the second tree you should use different vertices from previous levels during construction to make it different from first tree. This is always possible if there are two consecutive ai\u2009>\u20091. Otherwise the tree is determined uniquely by ai sequence."
-    },
-    "902D": {
-        "problem": {
-            "name": "D. GCD of Polynomials",
-            "time_limit": {
-                "value": 2,
-                "unit": "seconds"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Suppose you have two polynomials  and . Then polynomial  can be uniquely represented in the following way:This can be done using long division. Here,  denotes the degree of polynomial P(x).  is called the remainder of division of polynomial  by polynomial , it is also denoted as . Since there is a way to divide polynomials with remainder, we can define Euclid's algorithm of finding the greatest common divisor of two polynomials. The algorithm takes two polynomials . If the polynomial  is zero, the result is , otherwise the result is the value the algorithm returns for pair . On each step the degree of the second argument decreases, so the algorithm works in finite number of steps. But how large that number could be? You are to answer this question. You are given an integer n. You have to build two polynomials with degrees not greater than n, such that their coefficients are integers not exceeding 1 by their absolute value, the leading coefficients (ones with the greatest power of x) are equal to one, and the described Euclid's algorithm performs exactly n steps finding their greatest common divisor. Moreover, the degree of the first polynomial should be greater than the degree of the second. By a step of the algorithm we mean the transition from pair  to pair . ",
-            "inputSpecification": "You are given a single integer n (1n150) the number of steps of the algorithm you need to reach.",
-            "outputSpecification": "Print two polynomials in the following format.In the first line print a single integer m (0mn) the degree of the polynomial. In the second line print m+1 integers between -1 and 1 the coefficients of the polynomial, from constant to leading. The degree of the first polynomial should be greater than the degree of the second polynomial, the leading coefficients should be equal to 1. Euclid's algorithm should perform exactly n steps when called using these polynomials.If there is no answer for the given n, print -1.If there are multiple answer, print any of them.",
-            "public_tests": [
-                {
-                    "input": "1",
-                    "output": "10 101"
-                },
-                {
-                    "input": "2",
-                    "output": "2-1 0 110 1"
-                }
-            ],
-            "note": "In the second example you can print polynomials x2-1 and x. The sequence of transitions is(x2-1,x)(x,-1)(-1,0).There are two steps in it.",
-            "tags": [
-                "math",
-                "*2200"
-            ]
-        },
-        "editorial": "As for integers it is well known that worst case are consequent Fibonacci's numbers Fn\u2009+\u20091\u2009=\u2009Fn\u2009+\u2009Fn\u2009-\u20091. Solutions to this problem are based on the same idea. There were two main intended solutions. First of all you should note that sequencep0\u2009=\u20091,\u2009p1\u2009=\u2009x,\u2009 pn\u2009+\u20091\u2009=\u2009x\u00b7pn\u2009\u00b1\u2009pn\u2009-\u20091Gives us the family of solutions, we just have to output pn and pn\u2009-\u20091. It can be directly checked for given constraints that you can always choose \u2009+\u2009 or \u2009-\u2009 to satisfy coefficients constraints.The other solution is the same sequence but you use \u2009+\u2009 instead of \u2009\u00b1\u2009 and take coefficients modulo 2. That's true because if remainders sequence has k steps while you consider numbers by some modulo it will have at least k steps in rational numbers. So the second intended solution isp0\u2009=\u20091,\u2009p1\u2009=\u2009x,"
-    },
-    "902E": {
-        "problem": {
-            "name": "E. Bipartite Segments",
-            "time_limit": {
-                "value": 2,
-                "unit": "seconds"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "You are given an undirected graph with n vertices. There are no edge-simple cycles with the even length in it. In other words, there are no cycles of even length that pass each edge at most once. Let's enumerate vertices from 1 to n. You have to answer q queries. Each query is described by a segment of vertices [l;r], and you have to count the number of its subsegments [x;y] (lxyr), such that if we delete all vertices except the segment of vertices [x;y] (including x and y) and edges between them, the resulting graph is bipartite.",
-            "inputSpecification": "The first line contains two integers n and m (1n3105, 1m3105) the number of vertices and the number of edges in the graph.The next m lines describe edges in the graph. The i-th of these lines contains two integers ai and bi (1ai,bin; aibi), denoting an edge between vertices ai and bi. It is guaranteed that this graph does not contain edge-simple cycles of even length.The next line contains a single integer q (1q3105) the number of queries.The next q lines contain queries. The i-th of these lines contains two integers li and ri (1lirin) the query parameters.",
-            "outputSpecification": "Print q numbers, each in new line: the i-th of them should be the number of subsegments [x;y] (lixyri), such that the graph that only includes vertices from segment [x;y] and edges between them is bipartite.",
-            "public_tests": [
-                {
-                    "input": "6 61 22 33 14 55 66 431 34 61 6",
-                    "output": "5514"
-                },
-                {
-                    "input": "8 91 22 33 14 55 66 77 88 47 231 81 43 8",
-                    "output": "27819"
-                }
-            ],
-            "note": "The first example is shown on the picture below:For the first query, all subsegments of [1;3], except this segment itself, are suitable.For the first query, all subsegments of [4;6], except this segment itself, are suitable.For the third query, all subsegments of [1;6] are suitable, except [1;3], [1;4], [1;5], [1;6], [2;6], [3;6], [4;6].The second example is shown on the picture below:",
+            "note": "The first test case is explained in the problem statement.",
             "tags": [
                 "data structures",
-                "dfs and similar",
-                "graphs",
-                "*2300"
-            ]
-        },
-        "editorial": "If two cycles of odd length intersect, then they can be bypassed so as to obtain an edge-simple cycle of even length.It follows that the given graph is a vertex cactus, with cycles of odd length, then the vertex segment is good - if there is no loop, that the vertex with the minimum number from this cycle is present on this segment and the vertex with the maximum number from this cycle is present on this segment. Then we can select all the cycles, and now we work with the segments.Let us find for each vertex a maximal right boundary such that the interval [i..mxi] is a bipartite graph.Then mxi is equal to the minimal right boundary of the segment, which was opened later i.This can be considered a minimum on the suffix, initially setting for all cycles mx[minimum on the cycle] = maximum on the cycleTo answer the query, we need to take the sum over mxi\u2009-\u2009i\u2009+\u20091 for those who have mxi\u2009\u2265\u2009r and the sum over r\u2009-\u2009i\u2009+\u20091 for those who have mxi\u2009\u2265\u2009rthen we note that mxi increases and we simply need to find the first moment when mxi becomes \u2009\u2265\u2009r (we can do it with binary search)And take two prefix sums - sum of (mxi\u2009-\u2009i\u2009+\u20091) and sum of i."
-    },
-    "903A": {
-        "problem": {
-            "name": "A. Hungry Student Problem",
-            "time_limit": {
-                "value": 1,
-                "unit": "second"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Ivan's classes at the university have just finished, and now he wants to go to the local CFK cafe and eat some fried chicken.CFK sells chicken chunks in small and large portions. A small portion contains 3 chunks; a large one  7 chunks. Ivan wants to eat exactly x chunks. Now he wonders whether he can buy exactly this amount of chicken.Formally, Ivan wants to know if he can choose two non-negative integers a and b in such a way that a small portions and b large ones contain exactly x chunks.Help Ivan to answer this question for several values of x!",
-            "inputSpecification": "The first line contains one integer n (1n100)  the number of testcases.The i-th of the following n lines contains one integer xi (1xi100)  the number of chicken chunks Ivan wants to eat.",
-            "outputSpecification": "Print n lines, in i-th line output YES if Ivan can buy exactly xi chunks. Otherwise, print NO.",
-            "public_tests": [
-                {
-                    "input": "265",
-                    "output": "YESNO"
-                }
-            ],
-            "note": "In the first example Ivan can buy two small portions.In the second example Ivan cannot buy exactly 5 chunks, since one small portion is not enough, but two small portions or one large is too much.",
-            "tags": [
-                "greedy",
-                "implementation",
-                "*900"
-            ]
-        },
-        "editorial": "There are lots of different approaches to this problem. For example, you could just iterate on the values of a and b from 0 to 33 and check if 3a\u2009+\u20097b\u2009=\u2009x."
-    },
-    "903B": {
-        "problem": {
-            "name": "B. The Modcrab",
-            "time_limit": {
-                "value": 1,
-                "unit": "second"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Vova is again playing some computer game, now an RPG. In the game Vova's character received a quest: to slay the fearsome monster called Modcrab.After two hours of playing the game Vova has tracked the monster and analyzed its tactics. The Modcrab has h2 health points and an attack power of a2. Knowing that, Vova has decided to buy a lot of strong healing potions and to prepare for battle.Vova's character has h1 health points and an attack power of a1. Also he has a large supply of healing potions, each of which increases his current amount of health points by c1 when Vova drinks a potion. All potions are identical to each other. It is guaranteed that c1&gt;a2.The battle consists of multiple phases. In the beginning of each phase, Vova can either attack the monster (thus reducing its health by a1) or drink a healing potion (it increases Vova's health by c1; Vova's health can exceed h1). Then, if the battle is not over yet, the Modcrab attacks Vova, reducing his health by a2. The battle ends when Vova's (or Modcrab's) health drops to 0 or lower. It is possible that the battle ends in a middle of a phase after Vova's attack.Of course, Vova wants to win the fight. But also he wants to do it as fast as possible. So he wants to make up a strategy that will allow him to win the fight after the minimum possible number of phases.Help Vova to make up a strategy! You may assume that Vova never runs out of healing potions, and that he can always win.",
-            "inputSpecification": "The first line contains three integers h1, a1, c1 (1h1,a1100, 2c1100)  Vova's health, Vova's attack power and the healing power of a potion.The second line contains two integers h2, a2 (1h2100, 1a2&lt;c1)  the Modcrab's health and his attack power.",
-            "outputSpecification": "In the first line print one integer n denoting the minimum number of phases required to win the battle.Then print n lines. i-th line must be equal to HEAL if Vova drinks a potion in i-th phase, or STRIKE if he attacks the Modcrab.The strategy must be valid: Vova's character must not be defeated before slaying the Modcrab, and the monster's health must be 0 or lower after Vova's last action.If there are multiple optimal solutions, print any of them.",
-            "public_tests": [
-                {
-                    "input": "10 6 10017 5",
-                    "output": "4STRIKEHEALSTRIKESTRIKE"
-                },
-                {
-                    "input": "11 6 10012 5",
-                    "output": "2STRIKESTRIKE"
-                }
-            ],
-            "note": "In the first example Vova's character must heal before or after his first attack. Otherwise his health will drop to zero in 2 phases while he needs 3 strikes to win.In the second example no healing needed, two strikes are enough to get monster to zero health and win with 6 health left.",
-            "tags": [
-                "greedy",
-                "implementation",
-                "*1200"
-            ]
-        },
-        "editorial": "A simple greedy solution works: simulate the process until the Modcrab is dead, and make Vova drink a potion if his current health is less than a2\u2009+\u20091, and monster's current health is greater than a1 (because in this case Vova can't finish the Modcrab in one strike, but the Modcrab can win if Vova doesn't heal). In any other situation Vova must attack.Since all parameters are up to 100, the number of phases won't exceed 9901."
-    },
-    "903C": {
-        "problem": {
-            "name": "C. Boxes Packing",
-            "time_limit": {
-                "value": 1,
-                "unit": "second"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Mishka has got n empty boxes. For every i (1in), i-th box is a cube with side length ai.Mishka can put a box i into another box j if the following conditions are met:  i-th box is not put into another box;  j-th box doesn't contain any other boxes;  box i is smaller than box j (ai&lt;aj). Mishka can put boxes into each other an arbitrary number of times. He wants to minimize the number of visible boxes. A box is called visible iff it is not put into some another box.Help Mishka to determine the minimum possible number of visible boxes!",
-            "inputSpecification": "The first line contains one integer n (1n5000)  the number of boxes Mishka has got.The second line contains n integers a1, a2, ..., an (1ai109), where ai is the side length of i-th box.",
-            "outputSpecification": "Print the minimum possible number of visible boxes.",
-            "public_tests": [
-                {
-                    "input": "31 2 3",
-                    "output": "1"
-                },
-                {
-                    "input": "44 2 4 3",
-                    "output": "2"
-                }
-            ],
-            "note": "In the first example it is possible to put box 1 into box 2, and 2 into 3.In the second example Mishka can put box 2 into box 3, and box 4 into box 1.",
-            "tags": [
-                "greedy",
-                "*1200"
-            ]
-        },
-        "editorial": "You can always show that the answer is equal to the amount of boxes of the size appearing the most in array. Result can be easily obtained by constructive algorithm: take these most appearing boxes, put smaller boxes in decreasing order of their size into free ones (there always be space) and put resulting boxes into the larger ones in increasing order.Overall complexity: ."
-    },
-    "903D": {
-        "problem": {
-            "name": "D. Almost Difference",
-            "time_limit": {
-                "value": 2,
-                "unit": "seconds"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "Let's denote a function You are given an array a consisting of n integers. You have to calculate the sum of d(ai,aj) over all pairs (i,j) such that 1ijn.",
-            "inputSpecification": "The first line contains one integer n (1n200000)  the number of elements in a.The second line contains n integers a1, a2, ..., an (1ai109)  elements of the array. ",
-            "outputSpecification": "Print one integer  the sum of d(ai,aj) over all pairs (i,j) such that 1ijn.",
-            "public_tests": [
-                {
-                    "input": "51 2 3 1 3",
-                    "output": "4"
-                },
-                {
-                    "input": "46 6 5 5",
-                    "output": "0"
-                },
-                {
-                    "input": "46 6 4 4",
-                    "output": "-8"
-                }
-            ],
-            "note": "In the first example:  d(a1,a2)=0;  d(a1,a3)=2;  d(a1,a4)=0;  d(a1,a5)=2;  d(a2,a3)=0;  d(a2,a4)=0;  d(a2,a5)=0;  d(a3,a4)=-2;  d(a3,a5)=0;  d(a4,a5)=2. ",
-            "tags": [
-                "data structures",
-                "math",
-                "*2200"
-            ]
-        },
-        "editorial": "Starting pretty boring this came out as the most fun and controversial problem of the contest...Well, here is the basis of the solution. You maintain some kind of map/hashmap with amounts each number appeared in array so far. Processing each number you subtract ai i times (1-indexed), add prefix sum up to (i\u2009-\u20091)-th number, subtract cntai\u2009-\u20091\u2009*\u2009(ai\u2009-\u20091), cntai\u2009*\u2009ai and cntai\u2009+\u20091\u2009*\u2009(ai\u2009+\u20091) and add ai cntai\u2009-\u20091\u2009+\u2009cntai\u2009+\u2009cntai\u2009+\u20091 times. Then update cnt with ai.And now we have to treat numbers greater than long long limits. Obviously, you can use built-in bigints from java/python ot write your own class with support of addition and printing of such numbers. However, numbers were up to 1019 by absolute value. Then you can use long double, its precision is enough for simple multiplication and addition. You can also use unsigned long long numbers: one for negative terms and the other one for positive terms, in the end you should handle printing negative numbers.Overall complexity: ."
-    },
-    "903E": {
-        "problem": {
-            "name": "E. Swapping Characters",
-            "time_limit": {
-                "value": 1,
-                "unit": "second"
-            },
-            "mem_limit": {
-                "value": 256,
-                "unit": "megabytes"
-            },
-            "description": "We had a string s consisting of n lowercase Latin letters. We made k copies of this string, thus obtaining k identical strings s1,s2,...,sk. After that, in each of these strings we swapped exactly two characters (the characters we swapped could be identical, but they had different indices in the string).You are given k strings s1,s2,...,sk, and you have to restore any string s so that it is possible to obtain these strings by performing aforementioned operations. Note that the total length of the strings you are given doesn't exceed 5000 (that is, kn5000).",
-            "inputSpecification": "The first line contains two integers k and n (1k2500,2n5000,kn5000)  the number of strings we obtained, and the length of each of these strings.Next k lines contain the strings s1,s2,...,sk, each consisting of exactly n lowercase Latin letters.",
-            "outputSpecification": "Print any suitable string s, or -1 if such string doesn't exist.",
-            "public_tests": [
-                {
-                    "input": "3 4abaccaabacba",
-                    "output": "acab"
-                },
-                {
-                    "input": "3 4kbbukbububkb",
-                    "output": "kbub"
-                },
-                {
-                    "input": "5 4abcddcbaacbddbcazzzz",
-                    "output": "-1"
-                }
-            ],
-            "note": "In the first example s1 is obtained by swapping the second and the fourth character in acab, s2 is obtained by swapping the first and the second character, and to get s3, we swap the third and the fourth character.In the second example s1 is obtained by swapping the third and the fourth character in kbub, s2  by swapping the second and the fourth, and s3  by swapping the first and the third.In the third example it's impossible to obtain given strings by aforementioned operations.",
-            "tags": [
-                "brute force",
-                "hashing",
-                "implementation",
                 "strings",
-                "*2200"
+                "*1000"
             ]
         },
-        "editorial": "If we don't have two distinct strings then we just have to swap any pair of characters in any of the given strings and print it. Otherwise we have to find two indices i and j such that si\u2009\u2260\u2009sj. Then let's store all positions p such that si,\u2009p\u2009\u2260\u2009sj,\u2009p in array pos. If the number of those positions will exceed 4 then the answer will be \u00ab-1\u00bb. Otherwise we need to iterate over all positions diffpos in array pos, try to swap si,\u2009diffpos with any other character of si and check that current string can be the answer. We also should try the same thing with string sj.It is clear how we can check string t to be the answer. Let's iterate over all strings s1,\u2009s2,\u2009...,\u2009sk and for each string si count the number of positions p such that si,\u2009p\u2009\u2260\u2009tp. Let's call it diff(si,\u2009t). If for any given string diff(si,\u2009t) is not equal to 0 or 2 then string t can't be the answer. Otherwise if for any given string diff(si,\u2009t) is equal to 0 and all characters in string si are distinct then t can't be the answer.If there is no string that satisfies all aforementioned conditions then the answer will be \u00ab-1\u00bb."
+        "editorial": "To solve the problem, we can use two dictionaries (map): match the characters of the string to the numbers of the array in the map $$$m_1$$$ and the numbers of the array to the characters of the string in the map $$$m_2$$$.First, we check the length of the string to see if it is equal to the number $$$n$$$. If the string is longer or shorter, the answer is \"NO\".Otherwise, we will loop through the characters of the string and check the following conditions:   The map $$$m_1$$$ does not contain the character $$$s_i$$$ as a key, and the map $$$m_2$$$ does not contain the number $$$a_i$$$ as a key. Then let's perform the assignments $$$m_1[s_i] = a_i$$$ and $$$m_2[a_i] = s_i$$$.  One of the maps contains the current array element or string character as a key, but its value does not match the character or number in the current position. Then the answer to the problem is \u2014 \"NO\", you can break the loop. If the loop reaches the end of the line, the answer to the problem is \"YES\"."
     },
-    "903F": {
+    "2000D": {
         "problem": {
-            "name": "F. Clear The Matrix",
+            "name": "D. Right Left Wrong",
             "time_limit": {
-                "value": 1,
-                "unit": "second"
+                "value": 2,
+                "unit": "seconds"
             },
             "mem_limit": {
                 "value": 256,
                 "unit": "megabytes"
             },
-            "description": "You are given a matrix f with 4 rows and n columns. Each element of the matrix is either an asterisk (*) or a dot (.).You may perform the following operation arbitrary number of times: choose a square submatrix of f with size kk (where 1k4) and replace each element of the chosen submatrix with a dot. Choosing a submatrix of size kk costs ak coins.What is the minimum number of coins you have to pay to replace all asterisks with dots?",
-            "inputSpecification": "The first line contains one integer n (4n1000)  the number of columns in f.The second line contains 4 integers a1, a2, a3, a4 (1ai1000)  the cost to replace the square submatrix of size 11, 22, 33 or 44, respectively.Then four lines follow, each containing n characters and denoting a row of matrix f. Each character is either a dot or an asterisk.",
-            "outputSpecification": "Print one integer  the minimum number of coins to replace all asterisks with dots.",
+            "description": "Vlad found a strip of nn cells, numbered from left to right from 11 to nn. In the ii-th cell, there is a positive integer aia_i and a letter sis_i, where all sis_i are either 'L' or 'R'.Vlad invites you to try to score the maximum possible points by performing any (possibly zero) number of operations.In one operation, you can choose two indices ll and rr (1l&lt;rn1 \\le l ) such that sls_l = 'L' and srs_r = 'R' and do the following:  add al+al+1++ar1+ara_l + a_{l + 1} + \\dots + a_{r - 1} + a_r points to the current score;  replace sis_i with '.' for all lirl \\le i \\le r, meaning you can no longer choose these indices. For example, consider the following strip: 335511443322LRLLLR You can first choose l=1l = 1, r=2r = 2 and add 3+5=83 + 5 = 8 to your score. 335511443322..LLLR Then choose l=3l = 3, r=6r = 6 and add 1+4+3+2=101 + 4 + 3 + 2 = 10 to your score. 335511443322...... As a result, it is impossible to perform another operation, and the final score is 1818.What is the maximum score that can be achieved?",
+            "inputSpecification": "The first line contains one integer tt (1t1041 \\le t \\le 10^4) the number of test cases.The first line of each test case contains one integer nn (2n21052 \\le n \\le 2 \\cdot 10^5) the length of the strip.The second line of each test case contains nn integers a1,a2,,ana_1, a_2, \\dots, a_n (1ai1051 \\le a_i \\le 10^5) the numbers written on the strip.The third line of each test case contains a string ss of nn characters 'L' and 'R'.It is guaranteed that the sum of the values of nn across all test cases does not exceed 21052 \\cdot 10^5.",
+            "outputSpecification": "For each test case, output one integer the maximum possible number of points that can be scored.",
             "public_tests": [
                 {
-                    "input": "41 10 8 20***.***.***....*",
-                    "output": "9"
-                },
-                {
-                    "input": "72 1 8 2.***....***..*.***.......*..",
-                    "output": "3"
-                },
-                {
-                    "input": "410 10 1 10***.*..**..*.***",
-                    "output": "2"
+                    "input": "463 5 1 4 3 2LRLLLR22 8LR23 9RL51 2 3 4 5LRLRR",
+                    "output": "18\n10\n0\n22\n"
                 }
             ],
-            "note": "In the first example you can spend 8 coins to replace the submatrix 33 in the top-left corner, and 1 coin to replace the 11 submatrix in the bottom-right corner.In the second example the best option is to replace the 44 submatrix containing columns 25, and the 22 submatrix consisting of rows 23 and columns 67.In the third example you can select submatrix 33 in the top-left corner and then submatrix 33 consisting of rows 24 and columns 24.",
+            "note": null,
             "tags": [
-                "bitmasks",
-                "dp",
-                "*2200"
+                "greedy",
+                "implementation",
+                "two pointers",
+                "*1200"
             ]
         },
-        "editorial": "Constraints lead us to some kind of dp solution (is it usually called dp on broken profile?). Let dp[i][j][mask] will be the minimum price to get to i-th column and j-th row with mask selected. mask is the previous 12 cells inclusive from (i,\u2009j) (if j\u2009=\u20094 then its exactly current column and two previous ones). Transitions for submatrices 1\u2009\u00d7\u20091, 2\u2009\u00d7\u20092 and 3\u2009\u00d7\u20093 are straighforward, just update mask with new ones and add ak to current value.If the first cell of these 12 is empty or 1 is set in this position, then you can go to dp[i][j\u2009+\u20091][mask\u00bb1] (or (i\u2009+\u20091) and 1 if j\u2009=\u20094) for free.Finally you can go to dp[i\u2009+\u20091][j][212\u2009-\u20091] with the price of a4.Initial value can be 0 in dp[3][4][0] (the first 12 cells of the matrix).The answer will be stored in some valid mask of dp[n][1][mask]. However, you can add 4 extra empty columns and take the answer right from dp[n\u2009+\u20094][1][0], it will be of the same price.Overall complexity: O(n\u00b74\u00b7212)."
+        "editorial": "Note that since all characters of the selected segment of the string $$$s$$$ are erased after applying the operation, the segments we choose cannot overlap. However, they can be nested if we first choose an inner segment and then an outer one.Since all numbers in the array are positive, it is always beneficial to take the largest possible segment in the answer, that is, from the first 'L' to the last 'R'. By choosing this segment, we can only select segments within it. We will continue to choose such segments within the last selected one as long as possible. To quickly find the sums of the segments, we will calculate the prefix sums of the array $$$a$$$."
+    },
+    "2000E": {
+        "problem": {
+            "name": "E. Photoshoot for Gorillas",
+            "time_limit": {
+                "value": 2,
+                "unit": "seconds"
+            },
+            "mem_limit": {
+                "value": 256,
+                "unit": "megabytes"
+            },
+            "description": "You really love gorillas, so you decided to organize a photoshoot for them. Gorillas live in the jungle. The jungle is represented as a grid of nn rows and mm columns. ww gorillas agreed to participate in the photoshoot, and the gorilla with index ii (1iw1 \\le i \\le w) has a height of aia_i. You want to place all the gorillas in the cells of the grid such that there is no more than one gorilla in each cell.The spectacle of the arrangement is equal to the sum of the spectacles of all sub-squares of the grid with a side length of kk.The spectacle of a sub-square is equal to the sum of the heights of the gorillas in it.From all suitable arrangements, choose the arrangement with the maximum spectacle.",
+            "inputSpecification": "The first line contains an integer tt (1t1031 \\le t \\le 10^3) the number of test cases.The descriptions of the test cases follow.The first line contains integers nn, mm, kk (1n,m21051 \\le n, m \\le 2 \\cdot 10^5, 1nm21051 \\le n \\cdot m \\le 2 \\cdot 10^5, 1kmin(n,m)1 \\le k \\le \\min(n, m)) the dimensions of the grid and the side length of the square.The second line contains an integer ww (1wnm1 \\le w \\le n \\cdot m) the number of gorillas.The third line contains ww integers a1,a2,,awa_1, a_2, \\ldots, a_w (1ai1091 \\le a_i \\le 10^9) the heights of the gorillas.It is guaranteed that the sum of nmn \\cdot m across all test cases does not exceed 21052 \\cdot 10^5. The same guarantee applies to ww.",
+            "outputSpecification": "For each test case, output a single integer the maximum spectacle of a suitable arrangement.",
+            "public_tests": [
+                {
+                    "input": "53 4 291 1 1 1 1 1 1 1 12 1 125 720 15 794 1 4 5 6 1 1000000000 898 7771984 1 145 4 1499 20049 5 566 7 14 16 16 6",
+                    "output": "21\n12\n49000083104\n3512\n319\n"
+                }
+            ],
+            "note": "In the first test case of the first input set, the spectacle of the following sub-squares is summed:  Yellow color corresponds to the sub-squares, green to the rest of the grid squares. The picture shows the optimal arrangement of the gorillas. The spectacle of the arrangement is 4+4+3+3+4+3=214 + 4 + 3 + 3 + 4 + 3 = 21.",
+            "tags": [
+                "combinatorics",
+                "data structures",
+                "greedy",
+                "math",
+                "*1400"
+            ]
+        },
+        "editorial": "We will learn how to find the number of sub-squares that cover the cell $$$(i, j)$$$: $$$(\\min(i, n - k) - \\max(-1, i - k)) \\cdot (\\min(j, m - k) - \\max(-1, j - k))$$$. Next, we will use a straightforward greedy algorithm: we will place the tallest gorillas in the cells covered by the maximum number of squares. This can be done using two std::sort operations and a linear pass.The time complexity of the solution is: $$$O(n \\cdot m \\log (n \\cdot m) + w \\log w)$$$."
+    },
+    "2000F": {
+        "problem": {
+            "name": "F. Color Rows and Columns",
+            "time_limit": {
+                "value": 3,
+                "unit": "seconds"
+            },
+            "mem_limit": {
+                "value": 256,
+                "unit": "megabytes"
+            },
+            "description": "You have nn rectangles, the ii-th of which has a width of aia_i and a height of bib_i.You can perform the following operation an unlimited number of times: choose a rectangle and a cell in it, and then color it.Each time you completely color any row or column, you earn 11 point. Your task is to score at least kk points with as few operations as possible.Suppose you have a rectangle with a width of 66 and a height of 33. You can score 44 points by coloring all the cells in any 44 columns, thus performing 1212 operations.",
+            "inputSpecification": "The first line contains an integer tt (1t1001 \\le t \\le 100)  the number of test cases. The following are the descriptions of the test cases.The first line of each test case description contains two integers nn and kk (1n1000,1k1001 \\le n \\le 1000, 1 \\le k \\le 100)  the number of rectangles in the case and the required number of points.The next nn lines contain the descriptions of the rectangles. The ii-th line contains two integers aia_i and bib_i (1ai,bi1001 \\le a_i, b_i \\le 100)  the width and height of the ii-th rectangle.It is guaranteed that the sum of the values of nn across all test cases does not exceed 10001000.",
+            "outputSpecification": "For each test case, output a single integer  the minimum number of operations required to score at least kk points. If it is impossible to score at least kk points, output -1.",
+            "public_tests": [
+                {
+                    "input": "71 46 31 54 45 101 11 11 11 11 12 1001 25 63 112 23 34 43 259 24 38 104 185 48 58 36 2",
+                    "output": "12\n14\n5\n-1\n17\n80\n35\n"
+                }
+            ],
+            "note": null,
+            "tags": [
+                "dp",
+                "greedy",
+                "implementation",
+                "math",
+                "*1900"
+            ]
+        },
+        "editorial": "We will use the idea from the knapsack problem: let $$$dp[i][j]$$$ be the minimum number of operations required to achieve $$$j$$$ points using the first $$$i$$$ rectangles.To calculate the next value, we will iterate over the number of points scored in the $$$i$$$-th rectangle. To count the number of operations, we note that it is always better to paint the outer row of the smaller side of the unpainted part of the rectangle (which may change after painting the row)."
     }
 }

@@ -2,11 +2,22 @@ import bs4
 from requests import RequestException
 from requests_html import HTMLSession
 from playwright.sync_api import sync_playwright, Playwright
+from playwright.async_api import async_playwright
 import re
 
-def parse_problem(problem_link):
-    session = HTMLSession()
-    markup = session.get(problem_link).text
+async def parse_problem(problem_link):
+    async with async_playwright() as p:
+        device = p.devices['Desktop Chrome']
+        browser = await p.chromium.launch(headless=True)
+
+        context = await browser.new_context(**device)
+        page = await context.new_page()
+        await page.goto(problem_link)
+        await page.wait_for_timeout(100)
+        
+        markup = await page.content()
+        await browser.close()
+
     soup = bs4.BeautifulSoup(markup, "html.parser")
     problem = {
         "name": soup.find('div', 'title').string,
@@ -22,33 +33,69 @@ def parse_problem(problem_link):
     return problem
 
 
-def get_editorial_link(problem_link):
-    session = HTMLSession()
+async def get_editorial_link(problem_link):
     try:
-        response = session.get(problem_link)
-        response.raise_for_status()
-        markup = response.text
+        async with async_playwright() as p:
+            device = p.devices['Desktop Chrome']
+            # Launch the browser in headless mode with a proxy
+            browser = await p.chromium.launch(headless=True)
+
+            context = await browser.new_context(**device)
+            page = await context.new_page()
+            
+            await page.goto(problem_link)
+            await page.wait_for_timeout(100)
+            markup = await page.content()
+
+            await browser.close()
+
         soup = bs4.BeautifulSoup(markup, "html.parser")
-    except RequestException as e:
+        links = soup.find_all('a')
+        tutorial_link = None
+
+        # Loop through the links to find the tutorial link
+        for link in links:
+            if 'Tutorial' in link.get_text():
+                tutorial_link = link.get('href')
+                if not tutorial_link.startswith("/blog/entry"):
+                    tutorial_link = None
+                    continue
+                if "codeforces" not in tutorial_link:
+                    tutorial_link = "https://codeforces.com" + tutorial_link
+                break
+        return tutorial_link if tutorial_link else None
+
+    except Exception as e:
         print(f"An error occurred: {e}")
         return None
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        return None
 
-    links = soup.find_all('a')
-    tutorial_link = None
-    for link in links:
-        if 'Tutorial' in link.get_text():
-            tutorial_link = link.get('href')
-            if not tutorial_link.startswith("/blog/entry"):
-                tutorial_link = None
-                continue
-            if "codeforces" not in tutorial_link:
-                tutorial_link = "https://codeforces.com" + tutorial_link
-            break
+# def get_editorial_link(problem_link):
+#     session = HTMLSession()
+#     try:
+#         response = session.get(problem_link)
+#         response.raise_for_status()
+#         markup = response.text
+#         soup = bs4.BeautifulSoup(markup, "html.parser")
+#     except RequestException as e:
+#         print(f"An error occurred: {e}")
+#         return None
+#     except Exception as e:
+#         print(f"An unexpected error occurred: {e}")
+#         return None
+
+#     links = soup.find_all('a')
+#     tutorial_link = None
+#     for link in links:
+#         if 'Tutorial' in link.get_text():
+#             tutorial_link = link.get('href')
+#             if not tutorial_link.startswith("/blog/entry"):
+#                 tutorial_link = None
+#                 continue
+#             if "codeforces" not in tutorial_link:
+#                 tutorial_link = "https://codeforces.com" + tutorial_link
+#             break
     
-    return tutorial_link if tutorial_link else None
+#     return tutorial_link if tutorial_link else None
     
 
 def split_limit(soup):
